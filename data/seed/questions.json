@@ -1,0 +1,242 @@
+[
+  {
+    "code": "DA_PY_1",
+    "career_code": "DATA_ANALYST",
+    "competency_code": "PYTHON",
+    "prompt": "What is the result of len([2, 4, 6])?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "correct_option": 1,
+    "explanation": "len() returns the number of elements.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "DA_SQL_1",
+    "career_code": "DATA_ANALYST",
+    "competency_code": "SQL",
+    "prompt": "Which SQL clause filters rows before grouping?",
+    "options": [
+      "ORDER BY",
+      "WHERE",
+      "HAVING",
+      "LIMIT"
+    ],
+    "correct_option": 1,
+    "explanation": "WHERE filters rows before GROUP BY.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "DA_PBI_1",
+    "career_code": "DATA_ANALYST",
+    "competency_code": "POWER_BI",
+    "prompt": "In Power BI, what is DAX mainly used for?",
+    "options": [
+      "Styling HTML",
+      "Calculations and measures",
+      "Creating Python packages",
+      "Managing Git branches"
+    ],
+    "correct_option": 1,
+    "explanation": "DAX is the expression language for calculations.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "DA_STAT_1",
+    "career_code": "DATA_ANALYST",
+    "competency_code": "STATISTICS",
+    "prompt": "Which measure is most affected by extreme outliers?",
+    "options": [
+      "Median",
+      "Mode",
+      "Mean",
+      "Quartile"
+    ],
+    "correct_option": 2,
+    "explanation": "The arithmetic mean is sensitive to extreme values.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "DA_GIT_1",
+    "career_code": "DATA_ANALYST",
+    "competency_code": "GIT",
+    "prompt": "Which command records staged changes in Git history?",
+    "options": [
+      "git push",
+      "git commit",
+      "git pull",
+      "git status"
+    ],
+    "correct_option": 1,
+    "explanation": "git commit creates a commit from staged changes.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "PD_PY_1",
+    "career_code": "PYTHON_DEV",
+    "competency_code": "PYTHON",
+    "prompt": "Which Python structure stores key-value pairs?",
+    "options": [
+      "list",
+      "tuple",
+      "dict",
+      "set"
+    ],
+    "correct_option": 2,
+    "explanation": "A dictionary stores key-value pairs.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "PD_SQL_1",
+    "career_code": "PYTHON_DEV",
+    "competency_code": "SQL",
+    "prompt": "Which SQL command retrieves data?",
+    "options": [
+      "SELECT",
+      "INSERT",
+      "UPDATE",
+      "DELETE"
+    ],
+    "correct_option": 0,
+    "explanation": "SELECT retrieves rows from tables.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "PD_MONGO_1",
+    "career_code": "PYTHON_DEV",
+    "competency_code": "MONGODB",
+    "prompt": "MongoDB stores records primarily as which format?",
+    "options": [
+      "Rows only",
+      "BSON documents",
+      "CSV files",
+      "HTML elements"
+    ],
+    "correct_option": 1,
+    "explanation": "MongoDB stores BSON documents in collections.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "PD_GIT_1",
+    "career_code": "PYTHON_DEV",
+    "competency_code": "GIT",
+    "prompt": "Which command creates a new branch?",
+    "options": [
+      "git branch feature",
+      "git merge",
+      "git clone",
+      "git log"
+    ],
+    "correct_option": 0,
+    "explanation": "git branch with a name creates a branch.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "PD_JS_1",
+    "career_code": "PYTHON_DEV",
+    "competency_code": "JAVASCRIPT",
+    "prompt": "Which keyword declares a block-scoped variable that can be reassigned?",
+    "options": [
+      "const",
+      "let",
+      "class",
+      "import"
+    ],
+    "correct_option": 1,
+    "explanation": "let declares a reassignable block-scoped binding.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "WD_HTML_1",
+    "career_code": "WEB_DEV",
+    "competency_code": "HTML_CSS",
+    "prompt": "Which HTML element represents the main content of a page?",
+    "options": [
+      "<footer>",
+      "<main>",
+      "<aside>",
+      "<small>"
+    ],
+    "correct_option": 1,
+    "explanation": "The main element represents the dominant page content.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "WD_JS_1",
+    "career_code": "WEB_DEV",
+    "competency_code": "JAVASCRIPT",
+    "prompt": "Which method selects an element by its ID?",
+    "options": [
+      "document.querySelectorAll()",
+      "document.getElementById()",
+      "window.find()",
+      "element.getClass()"
+    ],
+    "correct_option": 1,
+    "explanation": "getElementById selects by the element ID.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "WD_PY_1",
+    "career_code": "WEB_DEV",
+    "competency_code": "PYTHON",
+    "prompt": "Which Python keyword defines a function?",
+    "options": [
+      "func",
+      "define",
+      "def",
+      "function"
+    ],
+    "correct_option": 2,
+    "explanation": "def begins a function definition.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "WD_SQL_1",
+    "career_code": "WEB_DEV",
+    "competency_code": "SQL",
+    "prompt": "Which SQL constraint enforces unique values in a column?",
+    "options": [
+      "UNIQUE",
+      "DEFAULT",
+      "CHECK only",
+      "INDEXED"
+    ],
+    "correct_option": 0,
+    "explanation": "UNIQUE prevents duplicate values in the constrained column.",
+    "difficulty": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "WD_GIT_1",
+    "career_code": "WEB_DEV",
+    "competency_code": "GIT",
+    "prompt": "Which command downloads a remote repository for the first time?",
+    "options": [
+      "git add",
+      "git clone",
+      "git commit",
+      "git diff"
+    ],
+    "correct_option": 1,
+    "explanation": "git clone copies a remote repository.",
+    "difficulty": "beginner",
+    "is_active": true
+  }
+]

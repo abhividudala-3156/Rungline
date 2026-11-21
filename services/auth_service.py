@@ -1,0 +1,94 @@
+
+from pymongo.errors import DuplicateKeyError
+
+from database.repositories.user_repository import UserRepository
+from utils.security import hash_password, password_policy, verify_password
+from utils.validators import validate_registration
+
+
+class AuthService:
+    def __init__(self, db):
+        self.db = db
+        self.users = UserRepository(db)
+
+    def register(self, name, email, password):
+        ok, message = validate_registration(name, email, password)
+        if not ok:
+            raise ValueError(message)
+
+        ok, message = password_policy(password)
+        if not ok:
+            raise ValueError(message)
+
+        email = email.strip().lower()
+
+        if self.users.by_email(email):
+            raise ValueError("An account with this email already exists.")
+
+        try:
+            user_id = self.users.create(
+                {
+                    "name": name.strip(),
+                    "email": email,
+                    "password_hash": hash_password(password),
+                    "role": "learner",
+                }
+            )
+        except DuplicateKeyError:
+            raise ValueError(
+                "An account with this email already exists."
+            ) from None
+
+        return str(user_id)
+
+    def login(self, email, password):
+        user = self.users.by_email(email.strip().lower())
+
+        if (
+            not user
+            or not user.get("is_active")
+            or not verify_password(password, user.get("password_hash", ""))
+        ):
+            return None
+
+        return {
+            "id": str(user["_id"]),
+            "name": user["name"],
+            "email": user["email"],
+            "role": user["role"],
+        }
+
+    def create_initial_admin(self, email, password):
+        email = email.strip().lower() if email else ""
+
+        if not email or not password:
+            raise ValueError(
+                "Set ADMIN_EMAIL and ADMIN_PASSWORD in .env first."
+            )
+
+        if self.db.users.count_documents({"role": "admin"}) > 0:
+            raise ValueError(
+                "An administrator account already exists. "
+                "Initial administrator setup is disabled."
+            )
+
+        if self.users.by_email(email):
+            raise ValueError("That email already exists.")
+
+        ok, message = password_policy(password)
+        if not ok:
+            raise ValueError(message)
+
+        try:
+            uid = self.users.create(
+                {
+                    "name": "Administrator",
+                    "email": email,
+                    "password_hash": hash_password(password),
+                    "role": "admin",
+                }
+            )
+        except DuplicateKeyError:
+            raise ValueError("That email already exists.") from None
+
+        return str(uid)

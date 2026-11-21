@@ -1,0 +1,3 @@
+Generated project starter package.
+Architecture: agreed modular monolith.
+External credentials are intentionally not included.

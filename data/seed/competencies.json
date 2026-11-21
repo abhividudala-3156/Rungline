@@ -1,0 +1,50 @@
+[
+  {
+    "code": "PYTHON",
+    "name": "Python Programming",
+    "category": "Programming",
+    "description": "Python syntax, data structures and problem solving."
+  },
+  {
+    "code": "SQL",
+    "name": "SQL and Databases",
+    "category": "Data",
+    "description": "Query relational data and understand database concepts."
+  },
+  {
+    "code": "POWER_BI",
+    "name": "Power BI",
+    "category": "Analytics",
+    "description": "Build data models, measures and dashboards."
+  },
+  {
+    "code": "STATISTICS",
+    "name": "Statistics",
+    "category": "Mathematics",
+    "description": "Apply descriptive statistics and basic inference."
+  },
+  {
+    "code": "GIT",
+    "name": "Git and Version Control",
+    "category": "Tools",
+    "description": "Track changes and collaborate using Git."
+  },
+  {
+    "code": "HTML_CSS",
+    "name": "HTML and CSS",
+    "category": "Web",
+    "description": "Create semantic and styled web pages."
+  },
+  {
+    "code": "JAVASCRIPT",
+    "name": "JavaScript",
+    "category": "Programming",
+    "description": "Build interactive browser functionality."
+  },
+  {
+    "code": "MONGODB",
+    "name": "MongoDB",
+    "category": "Database",
+    "description": "Model and query document-oriented data."
+  }
+]

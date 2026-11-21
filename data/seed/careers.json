@@ -1,0 +1,20 @@
+[
+  {
+    "code": "DATA_ANALYST",
+    "title": "Data Analyst",
+    "description": "Analyze data, build reports and communicate insights.",
+    "is_active": true
+  },
+  {
+    "code": "PYTHON_DEV",
+    "title": "Python Developer",
+    "description": "Build Python applications, APIs and automation.",
+    "is_active": true
+  },
+  {
+    "code": "WEB_DEV",
+    "title": "Web Developer",
+    "description": "Build accessible, responsive web applications.",
+    "is_active": true
+  }
+]

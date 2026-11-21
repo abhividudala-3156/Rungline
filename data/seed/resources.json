@@ -1,0 +1,74 @@
+[
+  {
+    "code": "RES_PY",
+    "competency_code": "PYTHON",
+    "title": "Python Tutorial",
+    "url": "https://docs.python.org/3/tutorial/",
+    "provider": "Python Documentation",
+    "level": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "RES_SQL",
+    "competency_code": "SQL",
+    "title": "SQL Tutorial",
+    "url": "https://www.w3schools.com/sql/",
+    "provider": "W3Schools",
+    "level": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "RES_PBI",
+    "competency_code": "POWER_BI",
+    "title": "Power BI Learning",
+    "url": "https://learn.microsoft.com/power-bi/",
+    "provider": "Microsoft Learn",
+    "level": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "RES_STATS",
+    "competency_code": "STATISTICS",
+    "title": "Kaggle Learn",
+    "url": "https://www.kaggle.com/learn",
+    "provider": "Kaggle",
+    "level": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "RES_GIT",
+    "competency_code": "GIT",
+    "title": "Git Book",
+    "url": "https://git-scm.com/book/en/v2",
+    "provider": "Git",
+    "level": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "RES_HTML",
+    "competency_code": "HTML_CSS",
+    "title": "HTML and CSS",
+    "url": "https://developer.mozilla.org/en-US/docs/Learn",
+    "provider": "MDN",
+    "level": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "RES_JS",
+    "competency_code": "JAVASCRIPT",
+    "title": "JavaScript Guide",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+    "provider": "MDN",
+    "level": "beginner",
+    "is_active": true
+  },
+  {
+    "code": "RES_MONGO",
+    "competency_code": "MONGODB",
+    "title": "MongoDB University",
+    "url": "https://learn.mongodb.com/",
+    "provider": "MongoDB",
+    "level": "beginner",
+    "is_active": true
+  }
+]

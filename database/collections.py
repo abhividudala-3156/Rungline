@@ -1,0 +1,17 @@
+COLLECTIONS = {
+    "users": "users",
+    "organizations": "organizations",
+    "careers": "careers",
+    "competencies": "competencies",
+    "career_competencies": "career_competencies",
+    "assessments": "assessments",
+    "questions": "questions",
+    "assessment_attempts": "assessment_attempts",
+    "competency_profiles": "competency_profiles",
+    "learning_paths": "learning_paths",
+    "learning_resources": "learning_resources",
+    "learning_progress": "learning_progress",
+    "ai_interactions": "ai_interactions",
+    "notifications": "notifications",
+    "audit_logs": "audit_logs",
+}

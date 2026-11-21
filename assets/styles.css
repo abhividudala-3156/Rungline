@@ -1,0 +1,2 @@
+/* Optional theme overrides. Streamlit renders its native accessible controls. */
+.block-container { padding-top: 2rem; padding-bottom: 3rem; }
