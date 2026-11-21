@@ -30,9 +30,13 @@ class LLMClient:
             raise ValueError("AI prompt exceeds the configured size limit.")
 
         from google import genai
+        from google.genai import types
 
         try:
-            client = genai.Client(api_key=self.api_key)
+            client = genai.Client(
+                api_key=self.api_key,
+                http_options=types.HttpOptions(timeout=settings.gemini_timeout_ms),
+            )
         except Exception:
             logger.error("Gemini client initialization failed.")
             raise RuntimeError(

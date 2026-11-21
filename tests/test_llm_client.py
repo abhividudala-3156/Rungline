@@ -11,18 +11,24 @@ from config import settings
 def install_fake_genai(monkeypatch, client_factory):
     google_module = types.ModuleType("google")
     genai_module = types.ModuleType("google.genai")
+    types_module = types.ModuleType("google.genai.types")
+
+    types_module.HttpOptions = lambda **kwargs: SimpleNamespace(**kwargs)
 
     genai_module.Client = client_factory
+    genai_module.types = types_module
     google_module.genai = genai_module
 
     monkeypatch.setitem(sys.modules, "google", google_module)
     monkeypatch.setitem(sys.modules, "google.genai", genai_module)
+    monkeypatch.setitem(sys.modules, "google.genai.types", types_module)
 
 
 def configure_gemini(monkeypatch):
     monkeypatch.setattr(settings, "ai_provider", "gemini")
     monkeypatch.setattr(settings, "gemini_api_key", "test-api-key")
     monkeypatch.setattr(settings, "gemini_model", "test-model")
+    monkeypatch.setattr(settings, "gemini_timeout_ms", 60000)
 
 
 def test_reject_unsupported_provider(monkeypatch):
@@ -53,10 +59,38 @@ def test_reject_invalid_prompt(monkeypatch, prompt):
         client.generate(prompt)
 
 
+def test_gemini_client_receives_configured_timeout(monkeypatch):
+    configure_gemini(monkeypatch)
+
+    client_options = {}
+
+    def client_factory(api_key, http_options=None):
+        client_options["api_key"] = api_key
+        client_options["timeout"] = http_options.timeout
+
+        return SimpleNamespace(
+            models=SimpleNamespace(
+                generate_content=lambda **kwargs: SimpleNamespace(
+                    text="Generated response"
+                )
+            )
+        )
+
+    install_fake_genai(monkeypatch, client_factory)
+
+    client = LLMClient(api_key="test-key", model="test-model")
+
+    result = client.generate("Test prompt")
+
+    assert result == "Generated response"
+    assert client_options["api_key"] == "test-key"
+    assert client_options["timeout"] == 60000
+
+
 def test_successful_generation(monkeypatch):
     configure_gemini(monkeypatch)
 
-    def client_factory(api_key):
+    def client_factory(api_key, http_options=None):
         assert api_key == "test-key"
 
         return SimpleNamespace(
@@ -82,7 +116,7 @@ def test_non_retryable_error_is_sanitized(monkeypatch):
     def generate_content(**kwargs):
         raise RuntimeError("Sensitive provider error and secret information")
 
-    def client_factory(api_key):
+    def client_factory(api_key, http_options=None):
         return SimpleNamespace(
             models=SimpleNamespace(generate_content=generate_content)
         )
@@ -110,7 +144,7 @@ def test_retryable_error_exhausts_attempts(monkeypatch):
         calls.append(kwargs)
         raise TemporaryError("Temporary provider failure")
 
-    def client_factory(api_key):
+    def client_factory(api_key, http_options=None):
         return SimpleNamespace(
             models=SimpleNamespace(generate_content=generate_content)
         )
@@ -143,7 +177,7 @@ def test_retry_succeeds_on_second_attempt(monkeypatch):
 
         return SimpleNamespace(text="Success after retry")
 
-    def client_factory(api_key):
+    def client_factory(api_key, http_options=None):
         return SimpleNamespace(
             models=SimpleNamespace(generate_content=generate_content)
         )
@@ -166,7 +200,7 @@ def test_retry_succeeds_on_second_attempt(monkeypatch):
 def test_empty_response_is_rejected(monkeypatch):
     configure_gemini(monkeypatch)
 
-    def client_factory(api_key):
+    def client_factory(api_key, http_options=None):
         return SimpleNamespace(
             models=SimpleNamespace(
                 generate_content=lambda **kwargs: SimpleNamespace(text=" ")
@@ -184,7 +218,7 @@ def test_empty_response_is_rejected(monkeypatch):
 def test_client_initialization_error_is_sanitized(monkeypatch):
     configure_gemini(monkeypatch)
 
-    def client_factory(api_key):
+    def client_factory(api_key, http_options=None):
         raise RuntimeError("Sensitive initialization details")
 
     install_fake_genai(monkeypatch, client_factory)
@@ -203,7 +237,7 @@ def test_oversized_prompt_is_rejected_before_client_initialization(
     configure_gemini(monkeypatch)
     monkeypatch.setattr(settings, "max_ai_prompt_chars", 10)
 
-    def client_factory(api_key):
+    def client_factory(api_key, http_options=None):
         pytest.fail("Gemini client should not be initialized.")
 
     install_fake_genai(monkeypatch, client_factory)
@@ -218,7 +252,7 @@ def test_prompt_at_configured_limit_is_accepted(monkeypatch):
     configure_gemini(monkeypatch)
     monkeypatch.setattr(settings, "max_ai_prompt_chars", 10)
 
-    def client_factory(api_key):
+    def client_factory(api_key, http_options=None):
         return SimpleNamespace(
             models=SimpleNamespace(
                 generate_content=lambda **kwargs: SimpleNamespace(

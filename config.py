@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     ai_provider: str = "gemini"
     gemini_api_key: str = ""
     gemini_model: str = "gemini-3.5-flash-lite"
+    gemini_timeout_ms: int = Field(default=60000, gt=0)
 
     secret_key: str = "change-this-development-secret"
 
