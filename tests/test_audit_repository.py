@@ -84,7 +84,7 @@ def test_record_creates_audit_log(setup_repository):
 def test_record_normalizes_actor_email(setup_repository):
     db, repository, actor = setup_repository
 
-    repository.record(actor, "database.seed.update", "success")
+    repository.record(actor, "database.seed.ensure", "success")
 
     assert db.audit_logs.documents[0]["actor_email"] == "admin@example.com"
 
@@ -151,7 +151,7 @@ def test_record_rejects_invalid_count(setup_repository):
     with pytest.raises(ValueError, match="count must be an integer"):
         repository.record(
             actor,
-            "database.seed.update",
+            "database.seed.ensure",
             "success",
             details={"count": True},
         )
@@ -161,7 +161,7 @@ def test_list_recent_returns_newest_first(setup_repository):
     db, repository, actor = setup_repository
 
     repository.record(actor, "database.indexes.ensure", "success")
-    repository.record(actor, "database.seed.update", "success")
+    repository.record(actor, "database.seed.ensure", "success")
 
     now = datetime.now(timezone.utc)
 
@@ -171,7 +171,7 @@ def test_list_recent_returns_newest_first(setup_repository):
     logs = repository.list_recent(actor)
 
     assert len(logs) == 2
-    assert logs[0]["action"] == "database.seed.update"
+    assert logs[0]["action"] == "database.seed.ensure"
     assert logs[1]["action"] == "database.indexes.ensure"
 
 

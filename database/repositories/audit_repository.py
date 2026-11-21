@@ -6,7 +6,7 @@ class AuditLogRepository:
 
     ALLOWED_ACTIONS = {
         "database.indexes.ensure",
-        "database.seed.update",
+        "database.seed.ensure",
         "auth.initial_admin.bootstrap",
     }
 

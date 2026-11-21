@@ -11,7 +11,7 @@ class Settings(BaseSettings):
 
     mongodb_uri: str = "mongodb://localhost:27017/"
     database_name: str = "competency_learning_db"
-    seed_on_start: bool = True
+    seed_on_start: bool = False
 
     ai_provider: str = "gemini"
     gemini_api_key: str = ""

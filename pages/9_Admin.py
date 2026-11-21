@@ -171,7 +171,7 @@ with col1:
 
 with col2:
     if st.button(
-        "Update Sample Reference Data",
+        "Add Missing Reference Data",
         width="stretch",
     ):
         try:
@@ -182,18 +182,18 @@ with col2:
             operation_succeeded = False
 
         audit_saved = record_maintenance_action(
-            action="database.seed.update",
+            action="database.seed.ensure",
             outcome="success" if operation_succeeded else "failure",
             operation="seed_database",
         )
 
         if operation_succeeded:
             st.success(
-                "Sample reference data updated successfully. "
-                "Existing learner records were not deleted."
+                "Missing reference data added successfully. "
+                "Existing records were left unchanged."
             )
         else:
-            st.error("The reference data update failed.")
+            st.error("Adding missing reference data failed.")
 
         if not audit_saved:
             st.warning("The operation's audit record could not be saved.")
