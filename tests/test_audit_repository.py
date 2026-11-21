@@ -211,3 +211,41 @@ def test_list_recent_rejects_incomplete_admin(setup_repository):
 
     with pytest.raises(ValueError, match="identity is incomplete"):
         repository.list_recent({"id": "admin-123", "role": "admin"})
+
+
+def test_record_initial_admin_bootstrap(setup_repository):
+    db, repository, actor = setup_repository
+
+    log_id = repository.record(
+        actor=actor,
+        action="auth.initial_admin.bootstrap",
+        outcome="success",
+        target_type="platform",
+        details={"operation": "initial_admin_bootstrap"},
+    )
+
+    assert log_id == "1"
+    assert len(db.audit_logs.documents) == 1
+
+    log = db.audit_logs.documents[0]
+
+    assert log["action"] == "auth.initial_admin.bootstrap"
+    assert log["outcome"] == "success"
+    assert log["details"]["operation"] == "initial_admin_bootstrap"
+
+
+def test_record_initial_admin_bootstrap_rejects_password_metadata(
+    setup_repository,
+):
+    _, repository, actor = setup_repository
+
+    with pytest.raises(ValueError, match="unsupported fields"):
+        repository.record(
+            actor=actor,
+            action="auth.initial_admin.bootstrap",
+            outcome="success",
+            details={
+                "operation": "initial_admin_bootstrap",
+                "password": "must-not-be-stored",
+            },
+        )

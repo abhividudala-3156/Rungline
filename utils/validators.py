@@ -1,4 +1,3 @@
-
 from pydantic import ValidationError
 
 from models.user import UserCreate

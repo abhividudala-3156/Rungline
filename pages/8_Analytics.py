@@ -14,9 +14,7 @@ st.caption("Monitor your assessment performance and learning development.")
 
 
 # Authentication and database connection
-db, user = require_authenticated_user(
-    allowed_roles=["learner"]
-)
+db, user = require_authenticated_user(allowed_roles=["learner"])
 
 # Database connection
 if not ping_database():

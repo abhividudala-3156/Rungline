@@ -1,4 +1,3 @@
-
 import pytest
 
 from services.auth_service import AuthService
@@ -29,7 +28,7 @@ def test_initial_admin_creation():
     db = FakeDB()
     service = AuthService(db)
 
-    uid = service.create_initial_admin(
+    uid = service.bootstrap_initial_admin(
         "admin@example.com",
         "AdminPass123",
     )
@@ -46,13 +45,13 @@ def test_second_admin_creation_is_rejected():
     db = FakeDB()
     service = AuthService(db)
 
-    service.create_initial_admin(
+    service.bootstrap_initial_admin(
         "admin@example.com",
         "AdminPass123",
     )
 
     with pytest.raises(ValueError, match="administrator account already exists"):
-        service.create_initial_admin(
+        service.bootstrap_initial_admin(
             "another@example.com",
             "AnotherPass123",
         )
@@ -63,10 +62,45 @@ def test_second_admin_creation_is_rejected():
 def test_initial_admin_requires_credentials():
     service = AuthService(FakeDB())
 
-    with pytest.raises(ValueError, match="ADMIN_EMAIL"):
-        service.create_initial_admin("", "")
+    with pytest.raises(ValueError, match="email and password are required"):
+        service.bootstrap_initial_admin("", "")
 
 
+def test_initial_admin_rejects_invalid_email():
+    service = AuthService(FakeDB())
+
+    with pytest.raises(ValueError):
+        service.bootstrap_initial_admin(
+            "invalid-email",
+            "AdminPass123",
+        )
+
+
+def test_initial_admin_rejects_invalid_password():
+    service = AuthService(FakeDB())
+
+    with pytest.raises(ValueError, match="8 characters"):
+        service.bootstrap_initial_admin(
+            "admin@example.com",
+            "Ab123",
+        )
+
+
+def test_initial_admin_rejects_existing_email():
+    db = FakeDB()
+    service = AuthService(db)
+
+    service.register(
+        "Existing Learner",
+        "admin@example.com",
+        "LearnerPass123",
+    )
+
+    with pytest.raises(ValueError, match="email already exists"):
+        service.bootstrap_initial_admin(
+            "admin@example.com",
+            "AdminPass123",
+        )
 
 
 def test_password_minimum_length():

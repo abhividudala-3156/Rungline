@@ -1,4 +1,3 @@
-
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,18 +31,14 @@ def seed_database(db):
                 }
 
             update_fields = {
-                field: value
-                for field, value in item.items()
-                if field != "created_at"
+                field: value for field, value in item.items() if field != "created_at"
             }
 
             db[collection].update_one(
                 query,
                 {
                     "$set": update_fields,
-                    "$setOnInsert": {
-                        "created_at": datetime.now(timezone.utc)
-                    },
+                    "$setOnInsert": {"created_at": datetime.now(timezone.utc)},
                 },
                 upsert=True,
             )

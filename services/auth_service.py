@@ -1,4 +1,3 @@
-
 from pymongo.errors import DuplicateKeyError
 
 from database.repositories.user_repository import UserRepository
@@ -35,9 +34,7 @@ class AuthService:
                 }
             )
         except DuplicateKeyError:
-            raise ValueError(
-                "An account with this email already exists."
-            ) from None
+            raise ValueError("An account with this email already exists.") from None
 
         return str(user_id)
 
@@ -58,13 +55,26 @@ class AuthService:
             "role": user["role"],
         }
 
-    def create_initial_admin(self, email, password):
-        email = email.strip().lower() if email else ""
+    def bootstrap_initial_admin(self, email, password):
+        if not isinstance(email, str) or not isinstance(password, str):
+            raise ValueError("Valid administrator credentials are required.")
+
+        email = email.strip().lower()
 
         if not email or not password:
-            raise ValueError(
-                "Set ADMIN_EMAIL and ADMIN_PASSWORD in .env first."
-            )
+            raise ValueError("Administrator email and password are required.")
+
+        ok, message = validate_registration(
+            "Administrator",
+            email,
+            password,
+        )
+        if not ok:
+            raise ValueError(message)
+
+        ok, message = password_policy(password)
+        if not ok:
+            raise ValueError(message)
 
         if self.db.users.count_documents({"role": "admin"}) > 0:
             raise ValueError(
@@ -73,14 +83,10 @@ class AuthService:
             )
 
         if self.users.by_email(email):
-            raise ValueError("That email already exists.")
-
-        ok, message = password_policy(password)
-        if not ok:
-            raise ValueError(message)
+            raise ValueError("An account with this email already exists.")
 
         try:
-            uid = self.users.create(
+            user_id = self.users.create(
                 {
                     "name": "Administrator",
                     "email": email,
@@ -88,7 +94,13 @@ class AuthService:
                     "role": "admin",
                 }
             )
-        except DuplicateKeyError:
-            raise ValueError("That email already exists.") from None
+        except DuplicateKeyError as exc:
+            if "one_administrator_only" in str(exc):
+                raise ValueError(
+                    "An administrator account already exists. "
+                    "Initial administrator setup is disabled."
+                ) from None
 
-        return str(uid)
+            raise ValueError("An account with this email already exists.") from None
+
+        return str(user_id)

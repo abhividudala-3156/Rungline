@@ -1,4 +1,3 @@
-
 class CompetencyService:
     @staticmethod
     def aggregate_answers(questions, answers):

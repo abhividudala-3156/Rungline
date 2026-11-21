@@ -16,9 +16,7 @@ st.caption("Follow your AI-generated learning plan and track your progress.")
 
 
 # Authentication and database connection
-db, user = require_authenticated_user(
-    allowed_roles=["learner"]
-)
+db, user = require_authenticated_user(allowed_roles=["learner"])
 
 career = st.session_state.get("career_code")
 

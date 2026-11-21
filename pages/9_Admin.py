@@ -2,12 +2,10 @@ import streamlit as st
 
 from config import settings
 from database.collections import COLLECTIONS
-from database.connection import get_database, ping_database
 from database.indexes import ensure_indexes
 from database.repositories.audit_repository import AuditLogRepository
 from database.repositories.user_repository import UserRepository
 from database.seed_database import seed_database
-from services.auth_service import AuthService
 from utils.auth import require_authenticated_user
 
 st.title("Administration")
@@ -18,54 +16,11 @@ st.caption("Manage platform reference data and monitor database activity.")
 # Administrator authentication
 session_user = st.session_state.get("user")
 
-if session_user is not None:
-    db, user = require_authenticated_user(allowed_roles=["admin"])
-
-else:
-    if not ping_database():
-        st.error("MongoDB is unavailable.")
-        st.stop()
-
-    db = get_database()
-
-    admin_exists = db.users.count_documents({"role": "admin"}) > 0
-
-    if not admin_exists:
-        st.warning("Administrator access is required.")
-
-        with st.expander("Initial Administrator Setup"):
-            st.write(
-                "This setup is intended only for creating "
-                "the initial administrator account."
-            )
-
-            st.warning(
-                "Do not use this setup to create additional administrator accounts."
-            )
-
-            if st.button("Create Initial Administrator"):
-                try:
-                    uid = AuthService(db).create_initial_admin(
-                        settings.admin_email,
-                        settings.admin_password,
-                    )
-
-                    st.success(f"Administrator created successfully. ID: {uid}")
-
-                    st.info(
-                        "Remove ADMIN_PASSWORD from your .env file before signing in."
-                    )
-
-                except Exception:
-                    st.error("Administrator setup failed.")
-
-    else:
-        st.info(
-            "An administrator account already exists. "
-            "Please sign in from the Home page."
-        )
-
+if session_user is None:
+    st.info("Administrator sign-in required. Please sign in from the Home page.")
     st.stop()
+
+db, user = require_authenticated_user(allowed_roles=["admin"])
 
 
 # Administrator dashboard

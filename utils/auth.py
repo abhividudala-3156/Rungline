@@ -1,4 +1,3 @@
-
 from datetime import datetime, timedelta, timezone
 
 import streamlit as st
@@ -34,10 +33,7 @@ def require_authenticated_user(allowed_roles=None):
 
     authenticated_at = st.session_state.get("authenticated_at")
 
-    if (
-        not isinstance(authenticated_at, datetime)
-        or authenticated_at.tzinfo is None
-    ):
+    if not isinstance(authenticated_at, datetime) or authenticated_at.tzinfo is None:
         clear_user_session()
         st.warning("Your session is invalid. Please sign in again.")
         st.stop()

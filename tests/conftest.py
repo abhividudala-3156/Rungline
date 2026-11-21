@@ -1,4 +1,3 @@
-
 class FakeCollection:
     def __init__(self):
         self.docs = []
@@ -13,19 +12,13 @@ class FakeCollection:
 
     def find_one(self, query):
         return next(
-            (
-                d
-                for d in self.docs
-                if all(d.get(k) == v for k, v in query.items())
-            ),
+            (d for d in self.docs if all(d.get(k) == v for k, v in query.items())),
             None,
         )
 
     def count_documents(self, query):
         return sum(
-            1
-            for doc in self.docs
-            if all(doc.get(k) == v for k, v in query.items())
+            1 for doc in self.docs if all(doc.get(k) == v for k, v in query.items())
         )
 
 

@@ -10,9 +10,7 @@ st.caption("View your account information and registration details.")
 
 
 # Authentication and database connection
-db, user = require_authenticated_user(
-    allowed_roles=["learner"]
-)
+db, user = require_authenticated_user(allowed_roles=["learner"])
 
 
 # Database connection

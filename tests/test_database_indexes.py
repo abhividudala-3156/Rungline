@@ -135,3 +135,18 @@ def test_ensure_indexes_creates_audit_log_indexes():
         [("created_at", -1)],
         {},
     ) in db.audit_logs.indexes
+
+
+def test_ensure_indexes_creates_single_administrator_constraint():
+    db = create_fake_db()
+
+    ensure_indexes(db)
+
+    assert (
+        "role",
+        {
+            "unique": True,
+            "partialFilterExpression": {"role": "admin"},
+            "name": "one_administrator_only",
+        },
+    ) in db.users.indexes

@@ -1,4 +1,3 @@
-
 from datetime import datetime, timezone
 
 
@@ -35,9 +34,7 @@ class AssessmentRepository:
         }
 
         safe_result = {
-            key: value
-            for key, value in result.items()
-            if key in allowed_fields
+            key: value for key, value in result.items() if key in allowed_fields
         }
 
         doc = {
@@ -59,7 +56,5 @@ class AssessmentRepository:
         limit = max(1, min(limit, self.MAX_HISTORY_LIMIT))
 
         return list(
-            self.attempts.find({"user_id": user_id})
-            .sort("created_at", -1)
-            .limit(limit)
+            self.attempts.find({"user_id": user_id}).sort("created_at", -1).limit(limit)
         )

@@ -1,4 +1,3 @@
-
 import logging
 
 from database import connection

@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 from services.assessment_service import AssessmentService
@@ -10,9 +9,7 @@ st.title("Competency Assessment")
 
 
 # Authentication and database connection
-db, user = require_authenticated_user(
-    allowed_roles=["learner"]
-)
+db, user = require_authenticated_user(allowed_roles=["learner"])
 
 
 # Career selection
@@ -33,9 +30,7 @@ if not questions:
 
 
 # Assessment instructions
-st.markdown(
-    "Answer the questions below to evaluate your current competency levels."
-)
+st.markdown("Answer the questions below to evaluate your current competency levels.")
 
 st.caption("Unanswered questions are excluded from the assessment score.")
 
@@ -98,9 +93,7 @@ if submitted:
                     f"{overall_score}%",
                 )
             else:
-                st.info(
-                    "Not enough evidence to calculate an overall score."
-                )
+                st.info("Not enough evidence to calculate an overall score.")
 
             render_competency_scores(
                 result.get("skill_scores", {}),
@@ -125,6 +118,4 @@ if previous_result and not submitted:
             f"{previous_result['overall_score']}%",
         )
 
-    render_competency_scores(
-        previous_result.get("skill_scores", {})
-    )
+    render_competency_scores(previous_result.get("skill_scores", {}))

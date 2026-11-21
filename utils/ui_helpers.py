@@ -1,4 +1,3 @@
-
 from urllib.parse import urlsplit
 
 import streamlit as st
@@ -10,9 +9,7 @@ def render_competency_scores(skill_scores, title="Competency Scores"):
     st.subheader(title)
 
     if not skill_scores:
-        st.info(
-            "No competency scores are available yet. Complete an assessment first."
-        )
+        st.info("No competency scores are available yet. Complete an assessment first.")
         return
 
     items = []

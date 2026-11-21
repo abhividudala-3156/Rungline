@@ -1,4 +1,3 @@
-
 import secrets
 
 import bcrypt
@@ -32,9 +31,7 @@ def password_policy(password: str) -> tuple[bool, str]:
     if len(password.encode("utf-8")) > 72:
         return False, "Password must not exceed 72 UTF-8 bytes."
 
-    if not any(c.isalpha() for c in password) or not any(
-        c.isdigit() for c in password
-    ):
+    if not any(c.isalpha() for c in password) or not any(c.isdigit() for c in password):
         return False, "Password must contain at least one letter and one number."
 
     return True, ""

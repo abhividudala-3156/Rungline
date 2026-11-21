@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 from analytics.visualizations import competency_gap_chart
@@ -9,15 +8,11 @@ from utils.auth import require_authenticated_user
 
 st.title("Competency Gap Analysis")
 
-st.caption(
-    "Understand your current skills and identify areas for improvement."
-)
+st.caption("Understand your current skills and identify areas for improvement.")
 
 
 # Authentication and database connection
-db, user = require_authenticated_user(
-    allowed_roles=["learner"]
-)
+db, user = require_authenticated_user(allowed_roles=["learner"])
 
 
 # Career selection
@@ -31,11 +26,7 @@ if not career:
 # Retrieve assessment results
 attempts = AssessmentService(db).history(user["id"])
 
-skill_scores = (
-    attempts[0].get("skill_scores", {})
-    if attempts
-    else {}
-)
+skill_scores = attempts[0].get("skill_scores", {}) if attempts else {}
 
 
 # Calculate competency gaps
@@ -75,14 +66,11 @@ with col3:
 
 # Assessment completion progress
 st.progress(
-    report["assessed_skills"] / report["total_skills"]
-    if report["total_skills"]
-    else 0
+    report["assessed_skills"] / report["total_skills"] if report["total_skills"] else 0
 )
 
 st.caption(
-    f"{report['assessed_skills']} of "
-    f"{report['total_skills']} competencies assessed."
+    f"{report['assessed_skills']} of {report['total_skills']} competencies assessed."
 )
 
 
@@ -120,21 +108,15 @@ for skill in report["skills"]:
             )
 
         if current is None:
-            st.info(
-                "Complete an assessment to measure this competency."
-            )
+            st.info("Complete an assessment to measure this competency.")
 
         else:
             st.progress(current / 5)
 
             if gap > 0:
-                st.warning(
-                    f"Improvement needed: {gap} competency level(s)."
-                )
+                st.warning(f"Improvement needed: {gap} competency level(s).")
             else:
-                st.success(
-                    "You have met the required competency level."
-                )
+                st.success("You have met the required competency level.")
 
 
 # Competency comparison chart
@@ -150,9 +132,7 @@ if chart:
         width="stretch",
     )
 else:
-    st.info(
-        "Complete an assessment to generate the competency chart."
-    )
+    st.info("Complete an assessment to generate the competency chart.")
 
 
 # Preserve report for other pages

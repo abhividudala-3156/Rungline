@@ -1,4 +1,3 @@
-
 from unittest.mock import patch
 
 from utils.ui_helpers import render_resource_links

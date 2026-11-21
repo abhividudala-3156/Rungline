@@ -5,6 +5,14 @@ def ensure_indexes(db):
     db.users.create_index("is_active")
     db.users.create_index([("created_at", -1)])
 
+    # Enforce at most one administrator account.
+    db.users.create_index(
+        "role",
+        unique=True,
+        partialFilterExpression={"role": "admin"},
+        name="one_administrator_only",
+    )
+
     # Careers and competencies
     db.careers.create_index("code", unique=True)
     db.careers.create_index([("is_active", 1), ("title", 1)])

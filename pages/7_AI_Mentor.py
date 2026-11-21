@@ -13,9 +13,7 @@ st.title("AI Learning Mentor")
 st.caption("Get personalized learning guidance based on your competency assessment.")
 
 # Authentication and database connection
-db, user = require_authenticated_user(
-    allowed_roles=["learner"]
-)
+db, user = require_authenticated_user(allowed_roles=["learner"])
 
 
 # Career selection

@@ -1,4 +1,3 @@
-
 import pytest
 
 from utils.validators import validate_registration

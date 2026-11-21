@@ -18,8 +18,6 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-3.5-flash-lite"
 
     secret_key: str = "change-this-development-secret"
-    admin_email: str = ""
-    admin_password: str = ""
 
     session_max_age_hours: int = Field(default=12, gt=0)
     max_ai_prompt_chars: int = Field(default=30000, gt=0)
@@ -48,9 +46,33 @@ class Settings(BaseSettings):
         return self
 
 
+def _load_streamlit_secrets():
+    """Read flat Streamlit secrets when running in Streamlit Cloud."""
+    try:
+        import streamlit as st
+        from streamlit.errors import StreamlitSecretNotFoundError
+
+        try:
+            values = dict(st.secrets)
+        except StreamlitSecretNotFoundError:
+            return {}
+
+    except ImportError:
+        return {}
+
+    allowed_fields = set(Settings.model_fields)
+
+    return {
+        key.lower(): value
+        for key, value in values.items()
+        if key.lower() in allowed_fields and not isinstance(value, dict)
+    }
+
+
 @lru_cache
 def get_settings():
-    return Settings()
+    """Load Streamlit secrets with environment and .env fallbacks."""
+    return Settings(**_load_streamlit_secrets())
 
 
 settings = get_settings()

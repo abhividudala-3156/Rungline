@@ -46,7 +46,13 @@ The application connects to MongoDB; it does not decide where MongoDB stores its
 
 ## First administrator
 
-Set `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env`. Open the Admin page and use **Create initial administrator**. The password is hashed with bcrypt; plaintext is not stored. Remove `ADMIN_PASSWORD` from `.env` after creating the administrator. Do not commit `.env`.
+Create the initial administrator from the project directory using `python -m scripts.create_admin`.
+
+The script checks MongoDB, ensures database indexes, and securely prompts for the administrator email and password. The password is hashed with bcrypt before storage.
+
+The bootstrap refuses to create another administrator if one already exists. Sign in through the Home page to access the Admin dashboard.
+
+Do not store administrator credentials in `.env` or commit passwords.
 
 ## Included sample data
 
@@ -79,5 +85,4 @@ The tests do not require a live MongoDB instance or real Gemini API key. Databas
 
 ## Functional boundaries
 
-The ZIP includes connected working foundations for authentication, career selection, assessment, deterministic gap analysis, AI recommendations, learning-path persistence, progress, notifications, admin seed/bootstrap, analytics and custom agent orchestration. External services require credentials. The included data and question bank are illustrative and should be reviewed/expanded.
-
+The project includes connected working foundations for authentication, career selection, assessment, deterministic gap analysis, AI recommendations, learning-path persistence, progress, notifications, admin seed/bootstrap, analytics and custom agent orchestration. External services require credentials. The included data and question bank are illustrative and should be reviewed/expanded.

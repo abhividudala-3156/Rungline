@@ -7,6 +7,7 @@ class AuditLogRepository:
     ALLOWED_ACTIONS = {
         "database.indexes.ensure",
         "database.seed.update",
+        "auth.initial_admin.bootstrap",
     }
 
     ALLOWED_OUTCOMES = {"success", "failure"}

@@ -1,4 +1,3 @@
-
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -67,9 +66,7 @@ def test_valid_session_is_accepted(monkeypatch):
     monkeypatch.setattr(auth, "get_database", lambda: db)
     monkeypatch.setattr(auth, "UserRepository", FakeUserRepository)
 
-    result_db, user = auth.require_authenticated_user(
-        allowed_roles=["learner"]
-    )
+    result_db, user = auth.require_authenticated_user(allowed_roles=["learner"])
 
     assert result_db is db
     assert user["id"] == "user-1"
@@ -144,4 +141,3 @@ def test_naive_timestamp_is_rejected(monkeypatch):
 
     assert "user" not in session
     assert "authenticated_at" not in session
-

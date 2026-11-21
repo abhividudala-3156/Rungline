@@ -11,9 +11,7 @@ st.caption("Track your competency development and learning progress.")
 
 
 # Authentication and database connection
-db, user = require_authenticated_user(
-    allowed_roles=["learner"]
-)
+db, user = require_authenticated_user(allowed_roles=["learner"])
 
 
 # Retrieve learner information
